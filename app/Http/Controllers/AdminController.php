@@ -31,7 +31,7 @@ class AdminController extends Controller
         $this->user = $user;
         $this->network = $network;
         $this->customer = $customer;
-        $this->manage=$manage;
+        $this->manage = $manage;
     }
 
     public function login(LoginRequest $request)
@@ -62,6 +62,7 @@ class AdminController extends Controller
             $data['customer'] = $this->customer->getCustomer(15, $request->network, $request->search, Auth::user()->id);
         }
         $data['network'] = $this->network->getAll();
+        $data['employees'] = $this->user->getFullEmployees();
         return view('modules.customer', $data);
     }
 
@@ -88,10 +89,10 @@ class AdminController extends Controller
             return Response()->json($validator->errors()->all());
         }
         try {
-            $data=$request->all();
+            $data = $request->all();
 
-            if(Auth::user()->roles==1)
-                $data['Manager_id']=Auth::user()->id;
+            if (Auth::user()->roles == 1)
+                $data['Manager_id'] = Auth::user()->id;
             $this->customer->create($data);
             $this->user->update(Auth::user()->id, ['bonus' => Auth::user()->bonus + 1]);
             return 'ok';
@@ -167,7 +168,13 @@ class AdminController extends Controller
     public function deleteCustomer(Request $request)
     {
         try {
+            $data=$this->customer->find($request->id)->Ctv_id;
             $this->customer->delete($request->id);
+            $collaborators=$this->user->find($data);
+            $bonus=$collaborators->bonus-1;
+            $collaborators->update([
+                'bonus'=>$bonus
+            ]);
             return 'ok';
 
         } catch (\Illuminate\Database\QueryException $e) {
@@ -175,21 +182,21 @@ class AdminController extends Controller
         }
     }
 
-    public function deleteMultipleCustomer(Request $request)
-    {
-        try {
-            $this->customer->deleteMultipleId($request->id);
-            return 'ok';
-        } catch (\Illuminate\Database\QueryException $e) {
-            return 'error';
-        }
-    }
+//    public function deleteMultipleCustomer(Request $request)
+//    {
+//        try {
+//            $this->customer->deleteMultipleId($request->id);
+//            return 'ok';
+//        } catch (\Illuminate\Database\QueryException $e) {
+//            return 'error';
+//        }
+//    }
 
     public function employee(Request $request)
     {
 
-        $data['employee'] = $this->user->getEmployee(15,$request->search);
-        $data['customers']=$this->customer->getRandomCustomer(10);
+        $data['employee'] = $this->user->getEmployee(15, $request->search);
+        $data['customers'] = $this->customer->getRandomCustomer(10);
         return view('modules.employee', $data);
     }
 
@@ -291,24 +298,78 @@ class AdminController extends Controller
             return 'error';
         }
     }
+
     public function addManage(Request $request)
     {
 
-        if(is_array($request->id)){
-           $this->customer->setManager($request->employee_id,$request->id);
-                   return 'ok';
-        }else{
+        if (is_array($request->id)) {
+            $this->customer->setManager($request->employee_id, $request->id);
+            return 'ok';
+        } else {
             return 'error';
         }
     }
+
     public function listCustomer(Request $request)
     {
-        $data['customers']=$this->customer->getCustomersByEmployeeId(Auth::user()->id,$request->search);
-        return view('modules.listcustomer',$data);
+        $data['customers'] = $this->customer->getCustomersByEmployeeId(Auth::user()->id, $request->search);
+        return view('modules.listcustomer', $data);
     }
+
     public function sendMail(Request $request)
     {
         Mail::to($request->email)->send(new sendMail());
         return 'ok';
     }
+
+    public function chooseManagerForCustomer(Request $request)
+    {
+//        return $request->all();
+        try {
+            $this->customer->update($request->id, ['Manager_id' => $request->idEmployee]);
+            return 'ok';
+        } catch (\Illuminate\Database\QueryException $e) {
+            return 'error';
+        }
+    }
+
+    public function index()
+    {
+        $data['countCustomersInDay'] = $this->customer->countCustomerInDay();
+        $data['countCustomersNotManager'] = $this->customer->countCustomersNotManage();
+        $data['countCollaborators'] = $this->user->countCollaborators();
+        $data['countEmployee'] = $this->user->countEmployee();
+        $data['topTenBonus'] = $this->user->topBonus();
+        $data['topTenManager'] = $this->customer->topTenManager();
+        $data['topTenNetwork'] = $this->customer->topTenNetwork();
+        return view('modules.index', $data);
+    }
+
+    public function collaborators(Request $request)
+    {
+        $data['collaborators'] = $this->user->getCollaborators(15, $request->search);
+        return view('modules.collaborators', $data);
+    }
+
+    public function showCustomerOfCollaborators($id, Request $request)
+    {
+        $check = $this->user->find($id);
+        if (!$check || $check->roles != 2) {
+            return redirect()->route('index');
+        }
+        $data['collaborators']=$check;
+        $data['customers']=$this->customer->getCustomer(15,null,$request->search,$id);
+        return view('modules.showCustomersOfCollaborators',$data);
+    }
+    public  function showCustomersOfEmployees($id,Request $request)
+    {
+        $check = $this->user->find($id);
+        if (!$check || $check->roles != 1) {
+            return redirect()->route('index');
+        }
+        $data['employee']=$check;
+        $data['customers']=$this->customer->getCustomersByEmployeeId($id,$request->search);
+        return view('modules.showCustomersOfEmployee',$data);
+    }
+
 }

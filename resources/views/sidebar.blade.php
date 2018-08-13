@@ -31,6 +31,9 @@
                 @if(Auth::user()->roles==1)
                 <li @if(Request::segment(1)=='list-customers') class="active" @endif><a href="{{ route('listCustomer') }}"> <i class="fa fa-users" aria-hidden="true"></i>Danh sách khách hàng </a></li>
                 @endif
+                @if(Auth::user()->roles==0)
+                    <li @if(Request::segment(1)=='collaborators') class="active" @endif ><a href="{{ route('collaborators') }}"> <i class="fa fa-address-book" aria-hidden="true"></i>Cộng tác viên </a></li>
+                @endif
             </ul>
         </div>
     </div>

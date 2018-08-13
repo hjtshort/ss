@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Bootstrap Dashboard by Bootstrapious.com</title>
+    <title>FPT system</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+    <link rel="shortcut icon" href="{{ asset('/cpanel/img/FPT_Logo.jpg' ) }}" />
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="{{ asset('/cpanel/vendor/bootstrap/css/bootstrap.min.css') }}">
     <!-- Font Awesome CSS-->

@@ -19,7 +19,7 @@ class checkRoles
         if(Auth::user()->roles<=$id){
             return $next($request);
         }else{
-            return redirect()->route('index');
+            return redirect()->route('404');
         }
 
     }

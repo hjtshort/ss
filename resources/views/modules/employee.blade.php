@@ -81,9 +81,9 @@
                                                 <button class="btn btn-warning addCustomer">
                                                     <i class="icon-user" aria-hidden=""></i>
                                                 </button>
-                                                <button class="btn btn-outline-dark">
+                                                <a href="{{ route('getCustomersByEmployees',$v->id) }}" class="btn btn-outline-dark">
                                                     <i class="fa fa-eye" aria-hidden="true"></i>
-                                                </button>
+                                                </a>
                                             </td>
 
                                         </tr>
