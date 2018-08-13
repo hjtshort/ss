@@ -20,10 +20,13 @@ class CreateCustomersTable extends Migration
             $table->string('Customer_phone');
             $table->string('Customer_email')->unique();
             $table->string('Customer_address');
-            $table->string('Customer_network')->nullable();
             $table->unsignedInteger('Ctv_id');
             $table->foreign('Ctv_id')->references('id')->on('users')
                 ->onDelete('cascade');
+            $table->unsignedInteger('Network_id')->nullable();
+            $table->foreign('Network_id')->references('id')->on('networks')
+                ->onDelete('cascade');
+            $table->integer('Manager_id')->default(0);
             $table->timestamps();
         });
     }

@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('bonus')->default(0);
             $table->integer('group')->default(0);
             $table->integer('roles');
+            $table->string('provider')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

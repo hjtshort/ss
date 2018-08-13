@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repository\AbtractClass;
+use App\Repository\ModelUser;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -24,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(
+            AbtractClass::class,
+            ModelUser::class
+        );
     }
 }

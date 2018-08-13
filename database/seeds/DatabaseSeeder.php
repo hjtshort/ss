@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder{
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Bà của thựn',
+            'name' => 'Ngô Minh Thư',
             'email' => 'minhthu1611@gmail.com',
             'password' => bcrypt('1611'),
             'sex'=>1,
@@ -27,5 +27,12 @@ class UsersTableSeeder extends Seeder{
             'address'=>'Ô môn trung tâm thành phố Cần Thơ',
             'roles'=>0
         ]);
+        DB::table('networks')->insert([
+            array('Network'=>'FPT'),
+            array('Network'=>'VIETTEL'),
+            array('Network'=>'VNPT'),
+            array('Network'=>'SCTV')
+        ]);
     }
 }
+

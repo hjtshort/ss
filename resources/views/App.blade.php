@@ -26,9 +26,22 @@
     <link rel="stylesheet" href="{{ asset('/cpanel/css/custom.css') }}">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('/cpanel/img/favicon.icon') }}">
+    <link rel="stylesheet" href="{{ asset('/cpanel/css/loader.css') }}">
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <script src="{{ asset('/cpanel/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('/cpanel/vendor/popper.js/umd/popper.min.js') }}"> </script>
+    <script src="{{ asset('/cpanel/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/cpanel/js/grasp_mobile_progress_circle-1.0.0.min.js') }}"></script>
+    <script src="{{ asset('/cpanel/vendor/jquery.cookie/jquery.cookie.js') }}"> </script>
+    {{--<script src="{{ asset('/cpanel/vendor/chart.js/Chart.min.js') }}"></script>--}}
+    {{--<script src="{{ asset('/cpanel/vendor/jquery-validation/jquery.validate.min.js') }}"></script>--}}
+    <script src="{{ asset('/cpanel/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+{{--<script src="{{ asset('/cpanel/js/charts-home.js') }}"></script>--}}
+<!-- Main File-->
+    <script src="{{ asset('/cpanel/js/front.js') }}"></script>
+
 </head>
 <body>
 <!-- Side Navbar -->
@@ -53,16 +66,6 @@
     </footer>
 </div>
 <!-- JavaScript files-->
-<script src="{{ asset('/cpanel/vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('/cpanel/vendor/popper.js/umd/popper.min.js') }}"> </script>
-<script src="{{ asset('/cpanel/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('/cpanel/js/grasp_mobile_progress_circle-1.0.0.min.js') }}"></script>
-<script src="{{ asset('/cpanel/vendor/jquery.cookie/jquery.cookie.js') }}"> </script>
-{{--<script src="{{ asset('/cpanel/vendor/chart.js/Chart.min.js') }}"></script>--}}
-{{--<script src="{{ asset('/cpanel/vendor/jquery-validation/jquery.validate.min.js') }}"></script>--}}
-<script src="{{ asset('/cpanel/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-{{--<script src="{{ asset('/cpanel/js/charts-home.js') }}"></script>--}}
-<!-- Main File-->
-<script src="{{ asset('/cpanel/js/front.js') }}"></script>
+
 </body>
 </html>
